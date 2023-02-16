@@ -6,7 +6,7 @@ function GaurdedRoute({ children }) {
   const { authed } = useAuth();
   const location = useLocation();
 
-  return authed || localStorage.getItem("isAuthed") ? (
+  return authed || localStorage.getItem("token") ? (
     children
   ) : (
     <Navigate to="/" replace state={{ path: location.pathname }} />

@@ -1,8 +1,7 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import Login from "../Pages/Login"
-// import Login from "../Pages/Login/Login"
+import SignIn from "../Pages/Login"
 import GaurdedRoute from "./GaurdedRoute/GaurdedRoute";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 
@@ -11,7 +10,7 @@ export default function MyRoutes() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<SignIn />} />
           <Route
             path="/dashboard"
             element={

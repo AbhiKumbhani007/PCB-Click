@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAuth } from "../../Context/AuthContext";
+import authServices from "../../Auth/AuthServices";
 
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -44,30 +45,33 @@ const SignIn = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const { control, formState, handleSubmit, setError, setValue } = useForm({
+  // const { isValid, dirtyFields, errors } = formState;
+  // const { control, formState, handleSubmit, setError, setValue } = useForm({
+  //   mode: "onChange",
+  //   defaultValues,
+  //   resolver: yupResolver(schema),
+  // });
+  const { control, formState, handleSubmit, setValue } = useForm({
     mode: "onChange",
     defaultValues,
     resolver: yupResolver(schema),
   });
-  const { isValid, dirtyFields, errors } = formState;
+  const { errors } = formState;
 
   useEffect(() => {
-    setValue("email", "admin@fusetheme.com", {
+    setValue("email", "admin@gmail.com", {
       shouldDirty: true,
       shouldValidate: true,
     });
-    setValue("password", "admin", { shouldDirty: true, shouldValidate: true });
+    setValue("password", "1234", { shouldDirty: true, shouldValidate: true });
   }, [setValue]);
 
   function onSubmit({ email, password }) {
-    // const data = {
-    //   email: email,
-    //   password: password,
-    // };
-    localStorage.setItem("email", email);
     localStorage.setItem("isAuthed", true);
-    login().then(() => {
-      navigate("/dashboard");
+    authServices.signInWithEmailAndPassword(email, password).then(() => {
+      login().then(() => {
+        navigate("/dashboard");
+      });
     });
   }
   return (
@@ -207,7 +211,6 @@ const SignIn = () => {
           component="svg"
           className="absolute top-3 right-3"
           sx={{ color: "#324055", padding: "10px" }}
-          // stroke="currentColor"
           viewBox="0 0 220 192"
           width="220px"
           height="192px"
